@@ -4,7 +4,6 @@
 import random
 
 class Maze:
-
     def __init__(self,N):
         self.N = N
         self.n = 2 * N + 1
@@ -51,7 +50,7 @@ class Maze:
         fichier = open(file_name + '.txt',"w")
         fichier.write(self.str_maze())
 
-class Cellule:
+class Cell:
 
     def __init__(self,maze,X,Y):
         self.X = X
@@ -59,10 +58,10 @@ class Cellule:
         self.Y = Y
         self.y = 2 * self.Y - 1
 
-        self.droite = maze[x][y + 1]
-        self.gauche = maze[x][y - 1]
-        self.haut = maze[x - 1][y]
-        self.bas = maze[x + 1][y]
+        self.right = maze[x][y + 1]
+        self.left = maze[x][y - 1]
+        self.up = maze[x - 1][y]
+        self.down = maze[x + 1][y]
 
         self.maze = maze
         self.visited = False
@@ -71,29 +70,29 @@ class Cellule:
 
         print('X',self.X,'Y',self.Y)
 
-        print(' ' + self.haut)
-        print(self.gauche + ' ' + self.droite)
-        print(' ' + self.bas)
+        print(' ' + self.up)
+        print(self.left + ' ' + self.right)
+        print(' ' + self.down)
     
     def ID(self):
         return [self.X, self.Y]
 
-    def Suiv(self):
+    def Next(self):
         dir = random.randint(1,4)
 
         if dir == 1 and self.X > 1:
-            return Cellule(self.maze,self.X-1,self.Y)
+            return Cell(self.maze,self.X-1,self.Y)
 
         elif dir == 2 and self.Y < len(self.maze)//2 :
-            return Cellule(self.maze,self.X,self.Y+1)
+            return Cell(self.maze,self.X,self.Y+1)
 
         elif dir == 3 and self.X < len(self.maze)//2 :
-            return Cellule(self.maze,self.X+1,self.Y)
+            return Cell(self.maze,self.X+1,self.Y)
 
         elif dir == 4 and self.Y > 1:
-            return Cellule(self.maze,self.X,self.Y-1)
+            return Cell(self.maze,self.X,self.Y-1)
 
-        return self.Suiv()
+        return self.Next()
 
     def Visit(self):
         self.visited = True
