@@ -24,16 +24,20 @@ maze1.Print()
 
 path = []
 i = 0
+END = False
 while END  == False:
     if i == 0:
         cell = Cell(maze1, 1, 1)
-        path[i] = cell.ID()
+        path.append(cell.ID())
         cell.Visit()
+        i = i + 1
+        print('\n')
+        maze1.Print()
     
     else:
-        cell = cell.Suiv()
-        path[i] = cell.ID()
+        cell = cell.Next()
+        path.append(cell.ID())
         cell.Visit()
-
-    cell.Visit()
-    i = i + 1
+        i = i + 1
+        print('\n')
+        maze1.Print()
