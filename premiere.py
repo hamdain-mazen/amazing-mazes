@@ -1,10 +1,7 @@
 #Amazing Mazes
-
 # Première pierre - Recursive Backtrack
 
-
 import random
-
 
 class Maze:
 
@@ -29,41 +26,30 @@ class Maze:
                     else:
                         self.maze_matrix[i][j] = '.'
 
-
         self.maze_matrix[1][0] = '.'
         self.maze_matrix[-2][-1] = '.'
-
 
     def str_maze(self):
         
         maze_out = ''
 
         for i in range(self.n):
-
             if i != 0:
-
                 maze_out = maze_out + '\n'
 
 
             for j in range(self.n):
-
                 maze_out = maze_out + self.maze_matrix[i][j]
-        
 
         return maze_out
 
-
     def Print(self):
-
         print(self.str_maze())
 
 
     def Write(self,file_name):
-
         fichier = open(file_name + '.txt',"w")
-
         fichier.write(self.str_maze())
-
 
 class Cellule:
 
@@ -89,10 +75,8 @@ class Cellule:
         print(self.gauche + ' ' + self.droite)
         print(' ' + self.bas)
     
-
     def ID(self):
         return [self.X, self.Y]
-
 
     def Suiv(self):
         dir = random.randint(1,4)
@@ -111,6 +95,6 @@ class Cellule:
 
         return self.Suiv()
 
-    def Visite(self):
+    def Visit(self):
         self.visited = True
         self.maze.maze_matrix[self.x, self.y] = '+'

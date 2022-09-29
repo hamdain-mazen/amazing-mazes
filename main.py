@@ -27,6 +27,6 @@ maze1.Print()
 # if i == 0:
 #     cellule = Cellule(maze1, 1, 1)
 #     chemin[i] = cellule.ID()
-#     cellule.visited = True
+#     cellule.Visit()
 #     i = i + 1
 # else:
