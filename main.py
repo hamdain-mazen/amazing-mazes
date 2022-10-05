@@ -1,68 +1,22 @@
-from premiere import *
+from maze_classes import *
+from explorer_A import *
+from generator_RBT import build_recursive
 
-#Crée un labyrinthe selon la taille saisie
-# maze1 = Maze(int(input('Input maze size :')))
+#Crée les murs du labyrinthe selon la taille saisie
+maze_size = int(input('Input maze size : '))
+maze1 = Maze(maze_size)
 
-#Affiche le labyrinthe dans la console
-# maze1.Print()
+#Génère (RBT) un labyrinthe selon les murs définis
+maze1 = build_recursive(maze1)
 
 #Ecrit le labyrinthe dans un fichier dont le nom est à saisir
-# maze1.Write(input('File name ?'))
+file_name = input('File name ? ')
+maze1.Write(file_name)
 
-# #Crée un labyrinthe de taille 6
-maze1 = Maze(6)
-maze1.Print()
+#Résolution A*
+start_nod = Node(maze1,0,0)
+end_nod = Node(maze1,maze_size-1,maze_size-1)
+shorter_path(maze1, start_nod, end_nod)
 
-#Choisit un cheminement de 3 cellules depuis la première et affiche leur index et leur état
-# cell1 = Cell(maze1, 1, 1)
-# cell2 = cell1.Next()
-# cell3 = cell2.Next()
-
-# cell1.Print()
-# cell2.Print()
-# cell3.Print()
-
-path = []
-i = 0
-END = False
-while i < 10:
-    if i == 0:
-        cell = Cell(maze1, 1, 1)
-        path.append(cell.ID())
-        cell.Visit()
-        i = i + 1
-        maze1.Print()
-    
-    else:
-        cell = cell.Next()
-        path.append(cell.ID())
-        cell.Visit()
-        maze1.Print()
-        print(path)
-
-        if cell.x == path[-2][0]:
-            if cell.y > path[-2][1]:
-                dir = 4
-            else:
-                dir = 2
-
-        elif cell.y == path[-2][1]:
-            if cell.x > path[-2][0]:
-                dir = 1
-            else:
-                dir = 3
-
-        if dir == 1:
-            maze1.maze_matrix[cell.x-1][cell.y] = "|"
-
-        elif dir == 2:
-            maze1.maze_matrix[cell.x][cell.y+1] = "-"
-
-        elif dir == 3:
-            maze1.maze_matrix[cell.x+1][cell.y] = "|"
-
-        elif dir == 4:
-            maze1.maze_matrix[cell.x][cell.y-1] = "-"
-
-        i = i + 1
-        maze1.Print()
+#Ecrit le labyrinthe dans un fichier dont le nom est à saisir
+maze1.Write(file_name + ' - SOLVED')
