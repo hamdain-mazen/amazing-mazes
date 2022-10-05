@@ -73,30 +73,6 @@ class Cell:
     def ID(self):
         return [self.X, self.Y]
 
-    def Next(self):
-        
-        next_list = self.available_dir()
-        if next_list != []:
-            dir = random.choice(next_list)
-
-            if dir == 'N' and self.X > 0:
-                return self.maze.maze_cells[self.X-1][self.Y]
-
-            elif dir == 'E' and self.Y < self.maze.N - 1:
-                return self.maze.maze_cells[self.X][self.Y+1]
-
-            elif dir == 'S' and self.X < self.maze.N - 1:
-                return self.maze.maze_cells[self.X+1][self.Y]
-
-            elif dir == 'W' and self.Y > 0:
-                return self.maze.maze_cells[self.X][self.Y-1]
-
-            else:
-                return self.Next()
-
-        else:
-            return 'END'
-
     def Visit(self):
         self.visited = True
 
