@@ -8,7 +8,6 @@ class Maze:
         self.N = N
 
         self.maze_cells = []
-
         for I in range(N):
             self.maze_cells.append([])
             for J in range(N):

@@ -1,5 +1,4 @@
 from maze_classes import *
-import numpy as np
 
 class Node(Cell):
     def __init__(self,maze,X,Y):
@@ -20,10 +19,7 @@ class Node(Cell):
         self.parent = self.maze.maze_cells[0][0]
 
 def dist(nod1,nod2):
-    a = np.array((nod1.X, nod1.Y))
-    b = np.array((nod2.X, nod2.Y))
-
-    return np.linalg.norm(a-b)
+    return abs(nod2.X-nod1.X) + abs(nod2.Y-nod1.Y)
 
 def shorter_path(maze, start_nod, end_nod):
     maze.maze_cells[0][0].walls['W'] = True
@@ -37,9 +33,8 @@ def shorter_path(maze, start_nod, end_nod):
     maze.maze_cells[start_nod.X][start_nod.Y].symbol = '*'
     
     while openList != []:
-        
-        # Priorise la liste par HEURISTIC 
-        openList = sorted(openList, key=lambda node: node.heuristic)
+
+        openList = sorted(openList, key=lambda node: node.dist)
         
         # Parcourt la liste triée
         for u in openList:
@@ -53,9 +48,11 @@ def shorter_path(maze, start_nod, end_nod):
             else:
 
                 for v in neighbors(u):
-                    v.dist = dist(v,end_nod)
-                    v.cost = u.cost + 1
-                    v.heuristic = v.dist + v.cost
+
+                    dist_tmp = dist(v,end_nod)
+                    cost_tmp = u.cost + 1
+
+                    heuristic_tmp = dist_tmp + cost_tmp
 
                     in_open = False
                     in_closed = False
@@ -73,7 +70,7 @@ def shorter_path(maze, start_nod, end_nod):
                             in_open = True
                             h_open = openList[i].heuristic
                     
-                    if not ((in_open and h_open < v.heuristic) or (in_closed and h_closed < v.heuristic)):
+                    if not ((in_open and h_open < heuristic_tmp) or (in_closed and h_closed < heuristic_tmp)):
                         v.cost = u.cost + 1 
                         v.heuristic = v.cost + dist(v, end_nod)
                         v.parent = u
