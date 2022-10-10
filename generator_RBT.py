@@ -9,7 +9,9 @@ def build_recursive(maze):
     path.append(cell.ID())
     cell.Visit()
 
-    while len(path) < maze.N * maze.N:
+    cells_nb = maze.N * maze.N
+
+    while len(path) < cells_nb:
         prev_X = cell.X
         prev_Y = cell.Y
         cell = next(cell)
@@ -60,7 +62,7 @@ def next(cell):
             return cell.maze.maze_cells[cell.X][cell.Y-1]
 
         else:
-            return cell.Next()
+            next(cell)
 
     else:
         return 'END'
